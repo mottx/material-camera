@@ -312,7 +312,7 @@ public class Camera2Fragment extends BaseCameraFragment implements View.OnClickL
 
             Display display = getActivity().getWindowManager().getDefaultDisplay();
             Point screenSize= new Point();
-            display.getSize(screenSize);
+            display.getRealSize(screenSize);
 
             int orientation = VideoStreamView.getScreenOrientation(activity);
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||

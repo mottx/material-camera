@@ -12,7 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true" />
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true">
     <FrameLayout
         android:id="@+id/controlsFrame"
         android:layout_width="match_parent"
@@ -59,5 +63,6 @@
             android:textSize="@dimen/mcam_regular_content_fontsize" />
 
     </FrameLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
