@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .showPortraitWarning(false)
                 .allowRetry(true)
                 .countdownSeconds(30f)
-                .defaultToFrontFacing(true)
+                .defaultToFrontFacing(false)
+                .videoPreferredAspect(4f/3f)
                 .start(CAMERA_RQ);
     }
 

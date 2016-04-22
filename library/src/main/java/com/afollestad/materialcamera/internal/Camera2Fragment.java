@@ -8,6 +8,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
@@ -31,6 +32,7 @@ import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialcamera.R;
@@ -190,6 +192,8 @@ public class Camera2Fragment extends BaseCameraFragment implements View.OnClickL
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        FrameLayout frameControllers = (FrameLayout) view.findViewById(R.id.controlsFrame);
+        frameControllers.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
