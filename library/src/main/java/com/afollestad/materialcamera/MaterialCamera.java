@@ -2,14 +2,10 @@ package com.afollestad.materialcamera;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.AttrRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 
 import com.afollestad.materialcamera.internal.CameraIntentKey;
 import com.afollestad.materialcamera.util.CameraUtil;
@@ -114,19 +110,6 @@ public class MaterialCamera {
     public MaterialCamera saveDir(@Nullable String dir) {
         mSaveDir = dir;
         return this;
-    }
-
-    public MaterialCamera primaryColor(@ColorInt int color) {
-        mPrimaryColor = color;
-        return this;
-    }
-
-    public MaterialCamera primaryColorRes(@ColorRes int colorRes) {
-        return primaryColor(ContextCompat.getColor(mContext, colorRes));
-    }
-
-    public MaterialCamera primaryColorAttr(@AttrRes int colorAttr) {
-        return primaryColor(DialogUtils.resolveColor(mContext, colorAttr));
     }
 
     public MaterialCamera showPortraitWarning(boolean show) {

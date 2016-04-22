@@ -2,7 +2,6 @@ package com.afollestad.materialcamera.internal;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
@@ -12,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -93,9 +91,6 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
         super.onViewCreated(view, savedInstanceState);
         mPreviewFrame = (RelativeLayout) view.findViewById(R.id.rootFrame);
         mPreviewFrame.setOnClickListener(this);
-
-        FrameLayout frameControllers = (FrameLayout) view.findViewById(R.id.controlsFrame);
-        frameControllers.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override

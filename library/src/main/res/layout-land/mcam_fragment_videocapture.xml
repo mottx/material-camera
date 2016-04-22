@@ -4,6 +4,7 @@
     android:id="@+id/rootFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#009900"
     android:foreground="?selectableItemBackground">
 
     <include
@@ -17,12 +18,12 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="?colorPrimaryDark"
         android:elevation="@dimen/mcam_toolbar_elevation"
         android:paddingBottom="@dimen/mcam_content_inset"
         android:paddingLeft="@dimen/mcam_content_inset_less"
         android:paddingRight="@dimen/mcam_content_inset_less"
         android:paddingTop="@dimen/mcam_content_inset"
+        android:background="@android:color/transparent"
         tools:ignore="UnusedAttribute">
 
         <ImageButton

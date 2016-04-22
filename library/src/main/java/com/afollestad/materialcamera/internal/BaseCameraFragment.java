@@ -96,8 +96,8 @@ abstract class BaseCameraFragment extends Fragment implements CameraUriInterface
         mButtonVideo.setOnClickListener(this);
         mButtonFacing.setOnClickListener(this);
 
-        final int primaryColor = getArguments().getInt(CameraIntentKey.PRIMARY_COLOR);
-        view.findViewById(R.id.controlsFrame).setBackgroundColor(CameraUtil.darkenColor(primaryColor));
+//        final int primaryColor = getArguments().getInt(CameraIntentKey.PRIMARY_COLOR);
+//        view.findViewById(R.id.controlsFrame).setBackgroundColor(CameraUtil.darkenColor(primaryColor));
 
         if (savedInstanceState != null)
             mOutputUri = savedInstanceState.getString("output_uri");

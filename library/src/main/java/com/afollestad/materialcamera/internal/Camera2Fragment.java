@@ -8,8 +8,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -29,10 +29,10 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Size;
+import android.view.Display;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialcamera.R;
@@ -192,8 +192,6 @@ public class Camera2Fragment extends BaseCameraFragment implements View.OnClickL
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
-        FrameLayout frameControllers = (FrameLayout) view.findViewById(R.id.controlsFrame);
-        frameControllers.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -312,12 +310,16 @@ public class Camera2Fragment extends BaseCameraFragment implements View.OnClickL
             Log.d("Camera2Fragment", String.format("Orientations: Sensor = %d˚, Device = %d˚, Display = %d˚",
                     sensorOrientation, deviceRotation, mDisplayOrientation));
 
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            Point screenSize= new Point();
+            display.getSize(screenSize);
+
             int orientation = VideoStreamView.getScreenOrientation(activity);
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||
                     orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
-                mTextureView.setAspectRatio(mPreviewSize.getWidth(), mPreviewSize.getHeight());
+                mTextureView.setTextureSize(mPreviewSize.getWidth(), mPreviewSize.getHeight(),screenSize);
             } else {
-                mTextureView.setAspectRatio(mPreviewSize.getHeight(), mPreviewSize.getWidth());
+                mTextureView.setTextureSize(mPreviewSize.getHeight(), mPreviewSize.getWidth(),screenSize);
             }
             configureTransform(width, height);
             mMediaRecorder = new MediaRecorder();

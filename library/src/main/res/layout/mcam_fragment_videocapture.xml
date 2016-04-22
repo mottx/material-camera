@@ -4,12 +4,14 @@
     android:id="@+id/rootFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#009900"
     android:foreground="?selectableItemBackground">
 
     <include
         layout="@layout/mcam_include_camera_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true" />
 
     <FrameLayout
         android:id="@+id/controlsFrame"
@@ -21,6 +23,7 @@
         android:paddingLeft="@dimen/mcam_content_inset"
         android:paddingRight="@dimen/mcam_content_inset"
         android:paddingTop="@dimen/mcam_content_inset_less"
+        android:background="@android:color/transparent"
         tools:ignore="UnusedAttribute">
 
         <ImageButton

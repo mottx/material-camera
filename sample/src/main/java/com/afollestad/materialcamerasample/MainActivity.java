@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .allowRetry(true)
                 .countdownSeconds(30f)
                 .defaultToFrontFacing(false)
-                .videoPreferredAspect(4f/3f)
+                .videoPreferredAspect(16f/9f)
                 .start(CAMERA_RQ);
     }
 

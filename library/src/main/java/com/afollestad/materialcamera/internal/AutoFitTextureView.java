@@ -17,6 +17,7 @@
 package com.afollestad.materialcamera.internal;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.TextureView;
 
@@ -25,8 +26,9 @@ import android.view.TextureView;
  */
 class AutoFitTextureView extends TextureView {
 
-    private int mRatioWidth = 0;
-    private int mRatioHeight = 0;
+    private int mTextureWidth = 0;
+    private int mTextureHeight = 0;
+    private Point mDisplaySize;
 
     public AutoFitTextureView(Context context) {
         this(context, null);
@@ -48,12 +50,13 @@ class AutoFitTextureView extends TextureView {
      * @param width  Relative horizontal size
      * @param height Relative vertical size
      */
-    public void setAspectRatio(int width, int height) {
+    public void setTextureSize(int width, int height,Point size) {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("Size cannot be negative.");
         }
-        mRatioWidth = width;
-        mRatioHeight = height;
+        mTextureWidth = width;
+        mTextureHeight = height;
+        mDisplaySize = size;
         requestLayout();
     }
 
@@ -62,14 +65,23 @@ class AutoFitTextureView extends TextureView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
-        if (0 == mRatioWidth || 0 == mRatioHeight) {
+        if (0 == mTextureWidth || 0 ==mTextureHeight) {
             setMeasuredDimension(width, height);
         } else {
-            if (width < height * mRatioWidth / mRatioHeight) {
-                setMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
-            } else {
-                setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
+            if(mDisplaySize!=null) {
+                float scaleFactor = (mDisplaySize.x * 1.0f) / mTextureWidth > (mDisplaySize.y * 1.0f) / mTextureHeight ?
+                        (mDisplaySize.x * 1.0f) / mTextureWidth : (mDisplaySize.y * 1.0f) / mTextureHeight;
+                mTextureWidth = (int) (mTextureWidth * scaleFactor);
+                mTextureHeight = (int) (mTextureHeight*scaleFactor);
+                setMeasuredDimension(mTextureWidth, mTextureHeight);
+            }else{
+                if (width < height * mTextureWidth / mTextureHeight) {
+                    setMeasuredDimension(width, width * mTextureHeight / mTextureWidth);
+                } else {
+                    setMeasuredDimension(width * mTextureHeight / mTextureWidth, height);
+                }
             }
+
         }
     }
 
