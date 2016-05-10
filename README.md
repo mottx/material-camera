@@ -1,12 +1,10 @@
-#### This document will soon be re-written for the upcoming release.
-
 # Material Camera
 
 Android's video recording APIs are very difficult to figure out, especially since a lot of manufacturers
 like to mount their camera sensors upside down or sideways. This library is a result of lots of research
 and experimentation to get video recording to work universally.
 
-![Art](https://raw.githubusercontent.com/afollestad/material-camera/master/art/deviceart.png)
+<img src="https://raw.githubusercontent.com/afollestad/material-camera/master/art/showcase.png" width="400px" />
 
 ---
 
@@ -16,7 +14,7 @@ Please report any issues you have, and include device information. Camera behavi
 across different Android manufacturers and versions, especially on pre-Lollipop devices. I've done quite
 a bit of testing, but it's possible I missed something.
 
-**Some of this documentation needs to be updated.**
+**Some of this documentation may be outdated, exploration of the library is encouraged.**
 
 ---
 
@@ -46,7 +44,7 @@ Add this in your module's `build.gradle` file:
 ```gradle
 dependencies {
     ...
-    compile('com.github.afollestad:material-camera:0.2.5@aar') {
+    compile('com.github.afollestad:material-camera:0.2.6@aar') {
         transitive = true
     }
 }
@@ -92,7 +90,8 @@ new MaterialCamera(this)                       // Constructor takes an Activity
     .retryExits(false)                         // If true, the 'Retry' button in the playback screen will exit the camera instead of going back to the recorder
     .restartTimerOnRetry(false)                // If true, the countdown timer is reset to 0 when the user taps 'Retry' in playback
     .continueTimerInPlayback(false)            // If true, the countdown timer will continue to go down during playback, rather than pausing.
-    .videoBitRate(1024000)                     // Sets a custom bit rate for video recording.
+    .videoEncodingBitRate(1024000)             // Sets a custom bit rate for video recording.
+    .audioEncodingBitRate(50000)               // Sets a custom bit rate for audio recording.
     .videoFrameRate(30)                        // Sets a custom frame rate (FPS) for video recording.
     .videoPreferredHeight(720)                 // Sets a preferred height for the recorded video output.
     .videoPreferredAspect(4f / 3f)             // Sets a preferred aspect ratio for the recorded video output.
