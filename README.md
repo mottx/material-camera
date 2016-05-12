@@ -32,7 +32,7 @@ If you need use this forked version, add this in your module's `build.gradle` fi
 ```gradle
 dependencies {
     // ... other dependencies
-    compile 'com.afollestad:material-camera:0.2.8'
+    compile 'com.github.mottx:material-camera:fullscreen_0.2.8@aar'
 }
 ```
 
