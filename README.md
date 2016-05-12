@@ -18,22 +18,12 @@ a bit of testing, but it's possible I missed something.
 
 # Gradle Dependency
 
-[![Release](https://jitpack.io/v/afollestad/material-camera.svg)](https://jitpack.io/#afollestad/material-camera)
+[ ![jCenter](https://api.bintray.com/packages/drummer-aidan/maven/material-camera/images/download.svg) ](https://bintray.com/drummer-aidan/maven/material-camera/_latestVersion)
 [![Build Status](https://travis-ci.org/afollestad/material-camera.svg)](https://travis-ci.org/afollestad/material-camera)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-### Repository
-
-Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
-
-```gradle
-allprojects {
-	repositories {
-		...
-		maven { url "https://jitpack.io" }
-	}
-}
-```
+The Gradle dependency is available via [jCenter](https://bintray.com/drummer-aidan/maven/material-camera/view).
+jCenter is the default Maven repository used by Android Studio.
 
 ### Dependency
 
@@ -41,10 +31,8 @@ If you need use this forked version, add this in your module's `build.gradle` fi
 
 ```gradle
 dependencies {
-    ...
-    compile('com.github.mottx:material-camera:fullscreen_0.2.6@aar') {
-        transitive = true
-    }
+    // ... other dependencies
+    compile 'com.afollestad:material-camera:0.2.8'
 }
 ```
 
@@ -78,23 +66,31 @@ File saveFolder = new File(Environment.getExternalStorageDirectory(), "MaterialC
 if (!saveFolder.mkdirs())
     throw new RuntimeException("Unable to create save directory, make sure WRITE_EXTERNAL_STORAGE permission is granted.");
 
-new MaterialCamera(this)                       // Constructor takes an Activity
-    .allowRetry(true)                          // Whether or not 'Retry' is visible during playback
-    .autoSubmit(false)                         // Whether or not user is allowed to playback videos after recording. This can affect other things, discussed in the next section.
-    .saveDir(saveFolder)                       // The folder recorded videos are saved to
-    .primaryColorAttr(R.attr.colorPrimary)     // The theme color used for the camera, defaults to colorPrimary of Activity in the constructor
-    .showPortraitWarning(true)                 // Whether or not a warning is displayed if the user presses record in portrait orientation
-    .defaultToFrontFacing(false)               // Whether or not the camera will initially show the front facing camera
-    .retryExits(false)                         // If true, the 'Retry' button in the playback screen will exit the camera instead of going back to the recorder
-    .restartTimerOnRetry(false)                // If true, the countdown timer is reset to 0 when the user taps 'Retry' in playback
-    .continueTimerInPlayback(false)            // If true, the countdown timer will continue to go down during playback, rather than pausing.
-    .videoEncodingBitRate(1024000)             // Sets a custom bit rate for video recording.
-    .audioEncodingBitRate(50000)               // Sets a custom bit rate for audio recording.
-    .videoFrameRate(30)                        // Sets a custom frame rate (FPS) for video recording.
-    .videoPreferredHeight(720)                 // Sets a preferred height for the recorded video output.
-    .videoPreferredAspect(4f / 3f)             // Sets a preferred aspect ratio for the recorded video output.
-    .maxAllowedFileSize(1024 * 1024 * 5)       // Sets a max file size of 5MB, recording will stop if file reaches this limit. Keep in mind, the FAT file system has a file size limit of 4GB.
-    .start(CAMERA_RQ);                         // Starts the camera activity, the result will be sent back to the current Activity
+new MaterialCamera(this)                               // Constructor takes an Activity
+    .allowRetry(true)                                  // Whether or not 'Retry' is visible during playback
+    .autoSubmit(false)                                 // Whether or not user is allowed to playback videos after recording. This can affect other things, discussed in the next section.
+    .saveDir(saveFolder)                               // The folder recorded videos are saved to
+    .primaryColorAttr(R.attr.colorPrimary)             // The theme color used for the camera, defaults to colorPrimary of Activity in the constructor
+    .showPortraitWarning(true)                         // Whether or not a warning is displayed if the user presses record in portrait orientation
+    .defaultToFrontFacing(false)                       // Whether or not the camera will initially show the front facing camera
+    .retryExits(false)                                 // If true, the 'Retry' button in the playback screen will exit the camera instead of going back to the recorder
+    .restartTimerOnRetry(false)                        // If true, the countdown timer is reset to 0 when the user taps 'Retry' in playback
+    .continueTimerInPlayback(false)                    // If true, the countdown timer will continue to go down during playback, rather than pausing.
+    .videoEncodingBitRate(1024000)                     // Sets a custom bit rate for video recording.
+    .audioEncodingBitRate(50000)                       // Sets a custom bit rate for audio recording.
+    .videoFrameRate(30)                                // Sets a custom frame rate (FPS) for video recording.
+    .videoPreferredHeight(720)                         // Sets a preferred height for the recorded video output.
+    .videoPreferredAspect(4f / 3f)                     // Sets a preferred aspect ratio for the recorded video output.
+    .maxAllowedFileSize(1024 * 1024 * 5)               // Sets a max file size of 5MB, recording will stop if file reaches this limit. Keep in mind, the FAT file system has a file size limit of 4GB.
+    .iconRecord(R.drawable.mcam_action_play)           // Sets a custom icon for the button used to start recording
+    .iconStop(R.drawable.mcam_action_stop)             // Sets a custom icon for the button used to stop recording
+    .iconFrontCamera(R.drawable.mcam_camera_front)     // Sets a custom icon for the button used to switch to the front camera
+    .iconRearCamera(R.drawable.mcam_camera_rear)       // Sets a custom icon for the button used to switch to the rear camera
+    .iconPlay(R.drawable.mcam_action_play)             // Sets a custom icon used to start playback
+    .iconPause(R.drawable.mcam_action_pause)           // Sets a custom icon used to pause playback
+    .labelRetry(R.string.mcam_retry)                   // Sets a custom button label for the button used to retry recording, when available
+    .labelUseVideo(R.string.mcam_use_video)            // Sets a custom button label for the button used to confirm a recording
+    .start(CAMERA_RQ);                                 // Starts the camera activity, the result will be sent back to the current Activity
 ```
 
 **Note**: For `retryExists(true)`, `onActivityResult()` in the `Activity` that starts the camera will
