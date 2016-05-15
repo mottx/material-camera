@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.CamcorderProfile;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -405,16 +406,27 @@ public abstract class BaseCaptureActivity extends AppCompatActivity implements B
         return getIntent().getLongExtra(CameraIntentKey.MAX_ALLOWED_FILE_SIZE, -1);
     }
 
+    @Override
+    public int qualityProfile() {
+        return getIntent().getIntExtra(CameraIntentKey.QUALITY_PROFILE, CamcorderProfile.QUALITY_HIGH);
+    }
+
     @DrawableRes
     @Override
     public int iconPause() {
-        return getIntent().getIntExtra(CameraIntentKey.ICON_PAUSE, R.drawable.mcam_action_pause);
+        return getIntent().getIntExtra(CameraIntentKey.ICON_PAUSE, R.drawable.evp_action_pause);
     }
 
     @DrawableRes
     @Override
     public int iconPlay() {
-        return getIntent().getIntExtra(CameraIntentKey.ICON_PLAY, R.drawable.mcam_action_play);
+        return getIntent().getIntExtra(CameraIntentKey.ICON_PLAY, R.drawable.evp_action_play);
+    }
+
+    @DrawableRes
+    @Override
+    public int iconRestart() {
+        return getIntent().getIntExtra(CameraIntentKey.ICON_RESTART, R.drawable.evp_action_restart);
     }
 
     @DrawableRes

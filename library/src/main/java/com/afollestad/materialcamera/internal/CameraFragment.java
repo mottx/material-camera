@@ -97,6 +97,10 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        try {
+            mPreviewView.getHolder().getSurface().release();
+        } catch (Throwable ignored) {
+        }
         mPreviewFrame = null;
     }
 
@@ -165,10 +169,10 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
                 if (getArguments().getBoolean(CameraIntentKey.DEFAULT_TO_FRONT_FACING, false)) {
                     // Check front facing first
                     if (mInterface.getFrontCamera() != null && (Integer) mInterface.getFrontCamera() != -1) {
-                        mButtonFacing.setImageDrawable(VC.get(this, mInterface.iconRearCamera()));
+                        mButtonFacing.setImageResource(mInterface.iconRearCamera());
                         mInterface.setCameraPosition(CAMERA_POSITION_FRONT);
                     } else {
-                        mButtonFacing.setImageDrawable(VC.get(this, mInterface.iconFrontCamera()));
+                        mButtonFacing.setImageResource(mInterface.iconFrontCamera());
                         if (mInterface.getBackCamera() != null && (Integer) mInterface.getBackCamera() != -1)
                             mInterface.setCameraPosition(CAMERA_POSITION_BACK);
                         else mInterface.setCameraPosition(CAMERA_POSITION_UNKNOWN);
@@ -176,10 +180,10 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
                 } else {
                     // Check back facing first
                     if (mInterface.getBackCamera() != null && (Integer) mInterface.getBackCamera() != -1) {
-                        mButtonFacing.setImageDrawable(VC.get(this, mInterface.iconFrontCamera()));
+                        mButtonFacing.setImageResource(mInterface.iconFrontCamera());
                         mInterface.setCameraPosition(CAMERA_POSITION_BACK);
                     } else {
-                        mButtonFacing.setImageDrawable(VC.get(this, mInterface.iconRearCamera()));
+                        mButtonFacing.setImageResource(mInterface.iconRearCamera());
                         if (mInterface.getFrontCamera() != null && (Integer) mInterface.getFrontCamera() != -1)
                             mInterface.setCameraPosition(CAMERA_POSITION_FRONT);
                         else mInterface.setCameraPosition(CAMERA_POSITION_UNKNOWN);
@@ -288,7 +292,7 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
             }
             mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 
-            final CamcorderProfile profile = CamcorderProfile.get(getCurrentCameraId(), CamcorderProfile.QUALITY_HIGH);
+            final CamcorderProfile profile = CamcorderProfile.get(getCurrentCameraId(), mInterface.qualityProfile());
             mMediaRecorder.setOutputFormat(profile.fileFormat);
             mMediaRecorder.setVideoFrameRate(mInterface.videoFrameRate(profile.videoFrameRate));
             mMediaRecorder.setVideoSize(mVideoSize.width, mVideoSize.height);
@@ -348,7 +352,7 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
         if (prepareMediaRecorder()) {
             try {
                 // UI
-                mButtonVideo.setImageDrawable(VC.get(this, mInterface.iconStop()));
+                mButtonVideo.setImageResource(mInterface.iconStop());
                 if (!CameraUtil.isArcWelder())
                     mButtonFacing.setVisibility(View.GONE);
 
@@ -413,7 +417,7 @@ public class CameraFragment extends BaseCameraFragment implements View.OnClickLi
         if (!mInterface.didRecord())
             mOutputUri = null;
 
-        mButtonVideo.setImageDrawable(VC.get(this, mInterface.iconRecord()));
+        mButtonVideo.setImageResource(mInterface.iconRecord());
         if (!CameraUtil.isArcWelder())
             mButtonFacing.setVisibility(View.VISIBLE);
         if (mInterface.getRecordingStart() > -1 && getActivity() != null)
