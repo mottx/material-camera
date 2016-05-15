@@ -68,28 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String fileSize(File file) {
         return readableFileSize(file.length());
-//        final int bufferSize = 1024;
-//        final byte[] buffer = new byte[bufferSize];
-//        int read;
-//        int totalRead = 0;
-//        InputStream is = null;
-//        try {
-//            is = new FileInputStream(file);
-//            while ((read = is.read(buffer)) != -1)
-//                totalRead += read;
-//            return readableFileSize(totalRead);
-//        } catch (Throwable t) {
-//            t.printStackTrace();
-//            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-//            return "Unknown";
-//        } finally {
-//            if (is != null) {
-//                try {
-//                    is.close();
-//                } catch (Throwable ignored) {
-//                }
-//            }
-//        }
     }
 
     @Override

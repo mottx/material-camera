@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.afollestad'
     PUBLISH_ARTIFACT_ID = 'material-camera'
-    PUBLISH_VERSION = '0.2.8'
+    PUBLISH_VERSION = '0.2.11'
 }
 
 android {
@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 12
-        versionName "0.2.8"
+        versionCode 15
+        versionName "0.2.11"
     }
     lintOptions {
         abortOnError false
@@ -30,15 +30,13 @@ android {
 
 repositories {
     jcenter()
-    maven { url "https://jitpack.io" }
+    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.devbrackets.android:exomedia:2.5.6'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
-        transitive = true
-    }
+    compile 'com.afollestad:easyvideoplayer:0.2.5'
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
 }
 
 apply from: 'https://raw.githubusercontent.com/afollestad/aidanfollestad.com/master/android-release-aar.gradle'
