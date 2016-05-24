@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         new MaterialCamera(this)
                 .saveDir(saveDir)
-                .showPortraitWarning(false)
+                .showPortraitWarning(true)
                 .allowRetry(true)
                 .countdownSeconds(30f)
                 .defaultToFrontFacing(false)
