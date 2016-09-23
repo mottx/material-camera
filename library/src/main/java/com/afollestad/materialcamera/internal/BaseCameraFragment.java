@@ -318,26 +318,28 @@ abstract class BaseCameraFragment extends Fragment implements CameraUriInterface
     }
 
     private void setupFlashMode() {
-        if (mInterface.shouldHideFlash()) {
-            mButtonFlash.setVisibility(View.GONE);
-            return;
-        } else {
-            mButtonFlash.setVisibility(View.VISIBLE);
-        }
+        if(mButtonFlash!=null) {
+            if (mInterface.shouldHideFlash()) {
+                mButtonFlash.setVisibility(View.GONE);
+                return;
+            } else {
+                mButtonFlash.setVisibility(View.VISIBLE);
+            }
 
-        final int res;
-        switch (mInterface.getFlashMode()) {
-            case FLASH_MODE_AUTO:
-                res = mInterface.iconFlashAuto();
-                break;
-            case FLASH_MODE_ALWAYS_ON:
-                res = mInterface.iconFlashOn();
-                break;
-            case FLASH_MODE_OFF:
-            default:
-                res = mInterface.iconFlashOff();
-        }
+            final int res;
+            switch (mInterface.getFlashMode()) {
+                case FLASH_MODE_AUTO:
+                    res = mInterface.iconFlashAuto();
+                    break;
+                case FLASH_MODE_ALWAYS_ON:
+                    res = mInterface.iconFlashOn();
+                    break;
+                case FLASH_MODE_OFF:
+                default:
+                    res = mInterface.iconFlashOff();
+            }
 
-        mButtonFlash.setImageResource(res);
+            mButtonFlash.setImageResource(res);
+        }
     }
 }
