@@ -58,6 +58,8 @@ public class MaterialCamera {
     private boolean mRestartTimerOnRetry = false;
     private boolean mContinueTimerInPlayback = true;
     private boolean mForceCamera1 = false;
+    private boolean mStillShot;
+
 
     private int mVideoEncodingBitRate = -1;
     private int mAudioEncodingBitRate = -1;
@@ -76,7 +78,7 @@ public class MaterialCamera {
     private int mIconRestart;
 
     private int mLabelRetry;
-    private int mLabelUseVideo;
+    private int mLabelConfirm;
 
     public MaterialCamera(@NonNull Activity context) {
         mContext = context;
@@ -249,13 +251,35 @@ public class MaterialCamera {
         return this;
     }
 
+    @Deprecated
+    /*
+        This has been replaced with labelConfirm
+     */
     public MaterialCamera labelUseVideo(@StringRes int stringRes) {
-        mLabelUseVideo = stringRes;
+        mLabelConfirm = stringRes;
+        return this;
+    }
+
+    public MaterialCamera labelConfirm(@StringRes int stringRes) {
+        mLabelConfirm = stringRes;
+        return this;
+    }
+
+    /**
+     * Will take a still shot instead of recording
+     * Note: Current implementation will default to using Camera1 API.
+     * Also the library owner has chosen to disregard the Camera2 API regardless of settings, so
+     * this is a non issue anyway.
+     *
+     * @return
+     */
+    public MaterialCamera stillShot() {
+        mStillShot = true;
         return this;
     }
 
     public Intent getIntent() {
-        final Class<?> cls = !mForceCamera1 && CameraUtil.hasCamera2(mContext) ?
+        final Class<?> cls = !mForceCamera1 && CameraUtil.hasCamera2(mContext, mStillShot) ?
                 CaptureActivity2.class : CaptureActivity.class;
         Intent intent = new Intent(mContext, cls)
                 .putExtra(CameraIntentKey.LENGTH_LIMIT, mLengthLimit)
@@ -268,7 +292,8 @@ public class MaterialCamera {
                 .putExtra(CameraIntentKey.COUNTDOWN_IMMEDIATELY, mCountdownImmediately)
                 .putExtra(CameraIntentKey.RETRY_EXITS, mRetryExists)
                 .putExtra(CameraIntentKey.RESTART_TIMER_ON_RETRY, mRestartTimerOnRetry)
-                .putExtra(CameraIntentKey.CONTINUE_TIMER_IN_PLAYBACK, mContinueTimerInPlayback);
+                .putExtra(CameraIntentKey.CONTINUE_TIMER_IN_PLAYBACK, mContinueTimerInPlayback)
+                .putExtra(CameraIntentKey.STILL_SHOT, mStillShot);
 
         if (mVideoEncodingBitRate > 0)
             intent.putExtra(CameraIntentKey.VIDEO_BIT_RATE, mVideoEncodingBitRate);
@@ -301,8 +326,8 @@ public class MaterialCamera {
             intent.putExtra(CameraIntentKey.ICON_RESTART, mIconRestart);
         if (mLabelRetry != 0)
             intent.putExtra(CameraIntentKey.LABEL_RETRY, mLabelRetry);
-        if (mLabelUseVideo != 0)
-            intent.putExtra(CameraIntentKey.LABEL_USE_VIDEO, mLabelUseVideo);
+        if (mLabelConfirm != 0)
+            intent.putExtra(CameraIntentKey.LABEL_CONFIRM, mLabelConfirm);
 
         return intent;
     }
