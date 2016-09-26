@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.CamcorderProfile;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -106,16 +108,18 @@ public abstract class BaseCaptureActivity extends AppCompatActivity implements B
         }
         setContentView(R.layout.mcam_activity_videocapture);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // Translucent navigation bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final int primaryColor = getIntent().getIntExtra(CameraIntentKey.PRIMARY_COLOR, 0);
+            final boolean isPrimaryDark = CameraUtil.isColorDark(primaryColor);
+            final Window window = getWindow();
+            window.setStatusBarColor(CameraUtil.darkenColor(primaryColor));
+            window.setNavigationBarColor(isPrimaryDark ? primaryColor : Color.BLACK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                final View view = window.getDecorView();
+                int flags = view.getSystemUiVisibility();
+                flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                view.setSystemUiVisibility(flags);
+            }
         }
 
         if (null == savedInstanceState) {
@@ -566,5 +570,8 @@ public abstract class BaseCaptureActivity extends AppCompatActivity implements B
         return !useStillshot() || mFlashModes == null;
     }
 
-
+    @Override
+    public long autoRecordDelay() {
+        return getIntent().getLongExtra(CameraIntentKey.AUTO_RECORD, -1);
+    }
 }
