@@ -113,7 +113,8 @@ public abstract class BaseCaptureActivity extends AppCompatActivity implements B
             final boolean isPrimaryDark = CameraUtil.isColorDark(primaryColor);
             final Window window = getWindow();
             window.setStatusBarColor(CameraUtil.darkenColor(primaryColor));
-            window.setNavigationBarColor(isPrimaryDark ? primaryColor : Color.BLACK);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final View view = window.getDecorView();
                 int flags = view.getSystemUiVisibility();
