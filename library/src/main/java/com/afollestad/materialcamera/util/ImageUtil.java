@@ -20,8 +20,9 @@ import java.io.IOException;
 public class ImageUtil {
     /**
      * Saves byte[] array to disk
-     * @param input byte array
-     * @param output path to output file
+     *
+     * @param input    byte array
+     * @param output   path to output file
      * @param callback will always return in originating thread
      */
     public static void saveToDiskAsync(final byte[] input, final File output, final ICallback callback) {
@@ -72,7 +73,7 @@ public class ImageUtil {
      * @return rotated bitmap or null
      */
     @Nullable
-    public static Bitmap getRotatedBitmap(String inputFile, int reqWidth, int reqHeight, int inSampleSize) {
+    private static Bitmap getRotatedBitmap(String inputFile, int reqWidth, int reqHeight, int inSampleSize) {
         final int rotationInDegrees = getExifDegreesFromJpeg(inputFile);
 
         final BitmapFactory.Options opts = new BitmapFactory.Options();
@@ -93,7 +94,7 @@ public class ImageUtil {
         try {
             return Bitmap.createBitmap(origBitmap, 0, 0, origBitmap.getWidth(), origBitmap.getHeight(), matrix, true);
         } catch (OutOfMemoryError e) {
-            return getRotatedBitmap(inputFile, reqWidth, reqHeight, opts.inSampleSize+1);
+            return getRotatedBitmap(inputFile, reqWidth, reqHeight, opts.inSampleSize + 1);
         }
     }
 
@@ -119,11 +120,10 @@ public class ImageUtil {
         return inSampleSize;
     }
 
-    public static int getExifDegreesFromJpeg(String inputFile) {
+    private static int getExifDegreesFromJpeg(String inputFile) {
         try {
-            ExifInterface exif = new ExifInterface(inputFile);
-            int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
+            final ExifInterface exif = new ExifInterface(inputFile);
+            final int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
                 return 90;
             } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
@@ -131,12 +131,9 @@ public class ImageUtil {
             } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
                 return 270;
             }
-
         } catch (IOException e) {
             Log.e("exif", "Error when trying to get exif data from : " + inputFile, e);
         }
-
         return 0;
     }
-
 }
